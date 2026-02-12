@@ -63,7 +63,7 @@ export default function Footer() {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <p className="font-poppins text-gray-700 text-sm md:text-base">
-            Made with ❤️ for the one I love
+            Made with ❤️ by <span className="font-dancing text-red-600 font-semibold animate-pulse text-2xl">Shubham Singh</span>
           </p>
           <p className="font-poppins text-xs md:text-sm text-gray-600 mt-2">
             Happy Valentine's Day {currentYear}
