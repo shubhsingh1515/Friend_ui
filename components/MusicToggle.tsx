@@ -1,35 +1,40 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
 
 export default function MusicToggle() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.play().catch(() => {
-          // Autoplay might be blocked, just update UI
-        })
+  const toggleMusic = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    try {
+      if (!isPlaying) {
+        // important for mobile
+        audio.volume = 0.6;
+        await audio.play();
+        setIsPlaying(true);
       } else {
-        audioRef.current.pause()
+        audio.pause();
+        setIsPlaying(false);
       }
+    } catch (err) {
+      console.log("Audio play blocked:", err);
+      setIsPlaying(false);
+      alert("Tap again to allow music 🎵 (browser blocked autoplay)");
     }
-  }, [isPlaying])
-
-  const toggleMusic = () => {
-    setIsPlaying(!isPlaying)
-  }
+  };
 
   return (
     <>
       <audio
         ref={audioRef}
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
         loop
-        crossOrigin="anonymous"
+        preload="auto"
       />
 
       <motion.button
@@ -39,30 +44,14 @@ export default function MusicToggle() {
         whileTap={{ scale: 0.95 }}
         title="Tap to play music"
       >
-        <motion.div
-          initial={false}
-          animate={{
-            rotate: isPlaying ? 0 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-          className="text-xl md:text-2xl"
-        >
-          {isPlaying ? (
-            <motion.span
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-            >
-              🎵
-            </motion.span>
-          ) : (
-            <span>🎶</span>
-          )}
-        </motion.div>
+        <span className="text-xl md:text-2xl">
+          {isPlaying ? "🎵" : "🎶"}
+        </span>
       </motion.button>
 
       {isPlaying && (
         <motion.div
-          className="fixed bottom-20 md:bottom-24 right-4 md:right-8 z-30 bg-white text-gray-800 px-3 md:px-4 py-2 rounded-full shadow-lg font-poppins text-xs md:text-sm"
+          className="fixed bottom-20 md:bottom-24 right-4 md:right-8 z-30 bg-white text-gray-800 px-3 md:px-4 py-2 rounded-full shadow-lg text-xs md:text-sm"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
@@ -71,5 +60,5 @@ export default function MusicToggle() {
         </motion.div>
       )}
     </>
-  )
+  );
 }
