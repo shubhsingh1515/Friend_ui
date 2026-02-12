@@ -47,7 +47,7 @@ export default function SurpriseFlow({ onComplete }: { onComplete: () => void })
           </motion.h1>
 
           <p className="text-xl md:text-2xl text-gray-700 mb-10 font-poppins">
-            I made something special for you…
+            I made something special for you Supriya💕 
           </p>
 
           <motion.button

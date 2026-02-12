@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 export default function EnvelopeLetterReveal() {
   const [isOpen, setIsOpen] = useState(false)
 
-  const letterText = `My Dearest,
+  const letterText = `My Dearest Supriya,
 
 Since the moment you came into my life, every day has felt like a beautiful dream. You've brought color to my world, laughter to my heart, and meaning to my days.
 
@@ -15,7 +15,7 @@ This isn't just a Valentine's message—it's a promise. A promise to love you, t
 Every moment with you is a gift I never knew I needed.
 
 Forever yours,
-Your Love ❤️`
+Your Love ❤️ `
 
   return (
     <section className="py-12 px-4 md:py-16">
