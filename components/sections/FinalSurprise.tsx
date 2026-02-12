@@ -1,65 +1,88 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { useState, useRef } from 'react'
+import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import Image from "next/image";
 
 export default function FinalSurprise() {
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [showSuccess, setShowSuccess] = useState(false)
-  const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 })
-  const containerRef = useRef<HTMLDivElement>(null)
-  const noButtonRef = useRef<HTMLButtonElement>(null)
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const noButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleYes = () => {
-    setShowConfetti(true)
-    setShowSuccess(true)
+    setShowConfetti(true);
+    setShowSuccess(true);
 
     // Create heart rain animation
     for (let i = 0; i < 100; i++) {
-      const heart = document.createElement('div')
-      heart.innerHTML = '❤️'
-      heart.style.position = 'fixed'
-      heart.style.left = Math.random() * window.innerWidth + 'px'
-      heart.style.top = '-30px'
-      heart.style.fontSize = Math.random() * 20 + 15 + 'px'
-      heart.style.pointerEvents = 'none'
-      heart.style.zIndex = '999'
-      document.body.appendChild(heart)
+      const heart = document.createElement("div");
+      heart.innerHTML = "❤️";
+      heart.style.position = "fixed";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = "-30px";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
+      heart.style.pointerEvents = "none";
+      heart.style.zIndex = "999";
+      document.body.appendChild(heart);
 
-      const startX = parseFloat(heart.style.left)
-      const endX = startX + (Math.random() - 0.5) * 200
-      const endY = window.innerHeight + 30
+      const startX = parseFloat(heart.style.left);
+      const endX = startX + (Math.random() - 0.5) * 200;
+      const endY = window.innerHeight + 30;
 
-      let progress = 0
+      let progress = 0;
       const animate = () => {
-        progress += 0.01
+        progress += 0.01;
         if (progress > 1) {
-          heart.remove()
-          return
+          heart.remove();
+          return;
         }
-        heart.style.left = startX + (endX - startX) * progress + 'px'
-        heart.style.top = -30 + (endY + 30) * progress + 'px'
-        heart.style.opacity = String(1 - progress)
-        requestAnimationFrame(animate)
-      }
-      animate()
+        heart.style.left = startX + (endX - startX) * progress + "px";
+        heart.style.top = -30 + (endY + 30) * progress + "px";
+        heart.style.opacity = String(1 - progress);
+        requestAnimationFrame(animate);
+      };
+      animate();
     }
-  }
+  };
 
   const handleMouseEnterNo = () => {
-    if (!noButtonRef.current || !containerRef.current) return
+    if (!noButtonRef.current || !containerRef.current) return;
 
-    const containerRect = containerRef.current.getBoundingClientRect()
-    const newX = Math.random() * (containerRect.width - 150) - containerRect.width / 2 + 75
-    const newY = Math.random() * (containerRect.height - 60) - containerRect.height / 2 + 30
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const newX =
+      Math.random() * (containerRect.width - 150) - containerRect.width / 2 + 75;
+    const newY =
+      Math.random() * (containerRect.height - 60) - containerRect.height / 2 + 30;
 
-    setNoButtonPos({ x: newX, y: newY })
-  }
+    setNoButtonPos({ x: newX, y: newY });
+  };
 
   return (
-    <section id="final" className="min-h-screen flex items-center justify-center py-12 px-4 md:py-16">
+    <section
+      id="final"
+      className="min-h-screen flex items-center justify-center py-12 px-4 md:py-16"
+    >
       {!showSuccess ? (
         <div className="max-w-2xl w-full">
+          {/* ✅ Girlfriend Image */}
+          <motion.div
+            className="mx-auto mb-6 w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden shadow-xl border-4 border-white"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Image
+              src="/pho2.jpg"
+              alt="My Love"
+              width={220}
+              height={220}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </motion.div>
+
           <motion.h2
             className="text-4xl md:text-5xl font-dancing text-center text-red-600 mb-6 md:mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -86,7 +109,7 @@ export default function FinalSurprise() {
                     key={i}
                     className="absolute w-2 h-2 rounded-full"
                     style={{
-                      backgroundColor: ['#ff1744', '#ffc0cb', '#ff69b4'][i % 3],
+                      backgroundColor: ["#ff1744", "#ffc0cb", "#ff69b4"][i % 3],
                     }}
                     initial={{ x: 0, y: 0, opacity: 1 }}
                     animate={{
@@ -94,7 +117,7 @@ export default function FinalSurprise() {
                       y: (Math.random() - 0.5) * 400,
                       opacity: 0,
                     }}
-                    transition={{ duration: 3, ease: 'easeOut' }}
+                    transition={{ duration: 3, ease: "easeOut" }}
                   />
                 ))}
               </div>
@@ -104,7 +127,10 @@ export default function FinalSurprise() {
               <motion.button
                 onClick={handleYes}
                 className="px-6 md:px-8 py-3 md:py-4 bg-red-600 hover:bg-red-700 text-white font-poppins font-bold rounded-full text-lg transition-all shadow-lg"
-                whileHover={{ scale: 1.1, boxShadow: '0 15px 35px rgba(220, 38, 38, 0.4)' }}
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: "0 15px 35px rgba(220, 38, 38, 0.4)",
+                }}
                 whileTap={{ scale: 0.95 }}
               >
                 YES 😍
@@ -115,7 +141,7 @@ export default function FinalSurprise() {
                 onMouseEnter={handleMouseEnterNo}
                 onTouchStart={handleMouseEnterNo}
                 animate={noButtonPos}
-                transition={{ type: 'spring', stiffness: 150, damping: 15 }}
+                transition={{ type: "spring", stiffness: 150, damping: 15 }}
                 className="px-6 md:px-8 py-3 md:py-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-poppins font-bold rounded-full text-lg transition-all shadow-lg cursor-pointer"
               >
                 NO 🙃
@@ -141,6 +167,23 @@ export default function FinalSurprise() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
         >
+          {/* ✅ Girlfriend Image again in success */}
+          <motion.div
+            className="mx-auto mb-6 w-36 h-36 md:w-44 md:h-44 rounded-full overflow-hidden shadow-xl border-4 border-white"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.15, duration: 0.6 }}
+          >
+            <Image
+              src="/images/gf.jpg"
+              alt="My Valentine"
+              width={240}
+              height={240}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </motion.div>
+
           <motion.h2
             className="text-5xl md:text-6xl font-dancing text-red-600 mb-8"
             animate={{ y: [0, -10, 0] }}
@@ -174,5 +217,5 @@ export default function FinalSurprise() {
         </motion.div>
       )}
     </section>
-  )
+  );
 }
