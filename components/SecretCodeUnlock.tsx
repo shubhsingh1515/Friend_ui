@@ -11,7 +11,7 @@ export default function SecretCodeUnlock({ onUnlock }: SecretCodeUnlockProps) {
   const [code, setCode] = useState('')
   const [isError, setIsError] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const LOVE_CODE = 'LOVE2026'
+  const LOVE_CODE = 'LOVE88'
 
   const handleUnlock = () => {
     if (code.toUpperCase() === LOVE_CODE) {
@@ -124,9 +124,9 @@ export default function SecretCodeUnlock({ onUnlock }: SecretCodeUnlockProps) {
             Unlock 🔓
           </motion.button>
 
-          <p className="text-xs text-gray-500 text-center mt-4 font-poppins">
+          {/* <p className="text-xs text-gray-500 text-center mt-4 font-poppins">
             Hint: LOVE2026
-          </p>
+          </p> */}
         </div>
       </motion.div>
     </section>

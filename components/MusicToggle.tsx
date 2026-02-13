@@ -32,7 +32,7 @@ export default function MusicToggle() {
     <>
       <audio
         ref={audioRef}
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3"
+        src="/audio.mpeg"
         loop
         preload="auto"
       />
